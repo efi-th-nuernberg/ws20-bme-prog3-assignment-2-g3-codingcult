@@ -9,7 +9,9 @@ class TextFormatter {
           "tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et " +
           "justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est " +
           "Lorem ipsum dolor sit amet.";
-  String temp = " ";
+
+  private int maxLineLength;
+  private String finalText = "";
 
   public static void main(String[] args) {
     TextFormatter formatter = new TextFormatter(30);
@@ -18,20 +20,22 @@ class TextFormatter {
 
   // Konstruktor
   public TextFormatter(int maxLineLength) {
-  
-    for(int i = 0; i < (text.length()/maxLineLength); i++){
-
-//line 1
-     if(i == 0) {
-        temp = temp + (text.substring(i, maxLineLength) + "\n");
-      } else {
-       temp = temp + (text.substring(i*maxLineLength, i*maxLineLength+maxLineLength) + "\n");
-     }
-    }
+    this.maxLineLength = maxLineLength;
   }
 
   // Ausgabe
   public void print(String aText) {
-    System.out.println(temp);
+    StringTokenizer separateEachWord = new StringTokenizer(text);
+    String temp = "";
+    while (separateEachWord.hasMoreTokens()) {
+      String word = separateEachWord.nextToken();
+      if (temp.length() >= (maxLineLength - word.length())) {
+        finalText = finalText + temp + "\n";
+        temp = "";
+      }
+      temp = temp + word + " ";
+    }
+    finalText = finalText + temp;
+    System.out.println(finalText);
   }
 }
