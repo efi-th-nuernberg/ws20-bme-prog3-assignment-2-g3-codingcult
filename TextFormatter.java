@@ -1,14 +1,14 @@
-import java.util.StringTokenizer; 
+import java.util.StringTokenizer;
 
 class TextFormatter {
 
-  private static final String text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy " +
-          "eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et " +
-          "accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem " +
-          "ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod " +
-          "tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et " +
-          "justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est " +
-          "Lorem ipsum dolor sit amet.";
+  private static final String text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy "
+      + "eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et "
+      + "accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem "
+      + "ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod "
+      + "tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et "
+      + "justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est "
+      + "Lorem ipsum dolor sit amet.";
 
   private int maxLineLength;
   private String finalText = "";
@@ -18,12 +18,12 @@ class TextFormatter {
     formatter.print(text);
   }
 
-  // Konstruktor
+  // constructor
   public TextFormatter(int maxLineLength) {
     this.maxLineLength = maxLineLength;
   }
 
-  // Ausgabe
+  // outlay
   public void print(String aText) {
     StringTokenizer separateEachWord = new StringTokenizer(text);
     String temp = "";
@@ -31,10 +31,10 @@ class TextFormatter {
       String word = separateEachWord.nextToken();
       if (temp.length() >= (maxLineLength - word.length())) {
         // here we add method to align temp
-        temp = format_left_aligned(temp);
+        // temp = format_left_aligned(temp);
         // temp = format_right_aligned(temp);
-        // temp = format_block(temp);
-        
+        temp = format_block(temp);
+
         finalText = finalText + temp + "\n";
         temp = "";
       } else {
@@ -42,9 +42,9 @@ class TextFormatter {
       }
     }
     // here we add method to align the last word/sentecne of temp
-    temp = format_left_aligned(temp);
+    // temp = format_left_aligned(temp);
     // temp = format_right_aligned(temp);
-    // temp = format_block(temp);
+    temp = format_block(temp);
 
     finalText = finalText + temp;
     System.out.println(finalText);
@@ -53,7 +53,7 @@ class TextFormatter {
   // default
   public String format_left_aligned(String line) {
     String temp = line;
-    for(int i = 0; i < (maxLineLength - line.length()); i++) {
+    for (int i = 0; i < (maxLineLength - line.length()); i++) {
       temp = temp + " ";
     }
     return (temp);
@@ -61,31 +61,33 @@ class TextFormatter {
 
   public String format_right_aligned(String line) {
     String temp = line;
-    for(int i = 0; i < (maxLineLength - line.length()); i++) {
+    for (int i = 0; i < (maxLineLength - line.length()); i++) {
       temp = " " + temp;
     }
     return (temp);
   }
 
-  // does not work yet
+  // works. but not 100% as intended.
+  // all spaces get added at the first position.
+  // we could just i++ another time after we added space
+  //but then we have excess spaces in the end which destroys the purpose
   public String format_block(String line) {
     String temp = line;
+    int freeSpaces = maxLineLength - line.length();
     // how many space chars we need to add
-    for(int i = 0; i < (maxLineLength - temp.length()); i++) {
-      // searching for places in the string where we can add a space
-      for(int j = 0; j < temp.length()-1; j++) {
-        if(temp.charAt(j) == ' ') {
-          addChar(temp, '!', j);
-        }
-      }
+    for (int i = 0; i < temp.length()-1; i++) {
+        if (temp.charAt(i) == ' ' && freeSpaces != 0) {
+          temp = addChar(temp, ' ', i);
+          freeSpaces--;
+        } else {
+          // nothing
+        } 
     }
     return (temp);
   }
 
-  //https://www.baeldung.com/java-add-character-to-string
+  // https://www.baeldung.com/java-add-character-to-string
   public String addChar(String str, char ch, int position) {
-    StringBuilder sb = new StringBuilder(str);
-    sb.insert(position, ch);
-    return sb.toString();
+    return str.substring(0, position) + ch + str.substring(position);
   }
 }
