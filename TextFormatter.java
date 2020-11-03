@@ -18,12 +18,12 @@ class TextFormatter {
     formatter.print(text);
   }
 
-  // Konstruktor
+  // constructor
   public TextFormatter(int maxLineLength) {
     this.maxLineLength = maxLineLength;
   }
 
-  // Ausgabe
+  // outlay
   public void print(String aText) {
     StringTokenizer separateEachWord = new StringTokenizer(text);
     String temp = "";
