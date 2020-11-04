@@ -24,45 +24,30 @@ class TextFormatter {
   }
 
   // outlay
+  // !align left is default
   public void print(String aText) {
     StringTokenizer separateEachWord = new StringTokenizer(text);
     String temp = "";
     while (separateEachWord.hasMoreTokens()) {
       String word = separateEachWord.nextToken();
       if (temp.length() >= (maxLineLength - word.length())) {
-        // here we add method to align temp
-        // temp = format_left_aligned(temp);
         // temp = format_right_aligned(temp);
-        temp = format_block(temp);
-
+        // temp = format_block(temp);
         finalText = finalText + temp + "\n";
         temp = word;
-      } else {
-        if (temp.isEmpty()) {
+      } else if (temp.isEmpty()) {
           temp = word;
         } else {
           temp = temp + " " + word;
         }
-      }
     }
-    // here we add method to align the last word/sentecne of temp
-    // temp = format_left_aligned(temp);
     // temp = format_right_aligned(temp);
-    temp = format_block(temp);
-
+    // temp = format_block(temp);
     finalText = finalText + temp;
     System.out.println(finalText);
   }
 
-  // default
-  public String format_left_aligned(String line) {
-    String temp = line;
-    for (int i = 0; i < (maxLineLength - line.length()); i++) {
-      temp = temp + " ";
-    }
-    return (temp);
-  }
-
+  //align right
   public String format_right_aligned(String line) {
     String temp = line;
     for (int i = 0; i < (maxLineLength - line.length()); i++) {
@@ -71,6 +56,7 @@ class TextFormatter {
     return (temp);
   }
 
+  //align block
   public String format_block(String line) {
     String temp = line;
     int freeSpaces = maxLineLength - line.length();
