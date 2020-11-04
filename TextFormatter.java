@@ -33,6 +33,7 @@ class TextFormatter {
       if (temp.length() >= (maxLineLength - word.length())) {
         // temp = format_right_aligned(temp);
         // temp = format_block(temp);
+        
         finalText = finalText + temp + "\n";
         temp = word;
       } else if (temp.isEmpty()) {
@@ -43,6 +44,7 @@ class TextFormatter {
     }
     // temp = format_right_aligned(temp);
     // temp = format_block(temp);
+
     finalText = finalText + temp;
     System.out.println(finalText);
   }
