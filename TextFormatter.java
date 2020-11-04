@@ -71,7 +71,6 @@ class TextFormatter {
     return (temp);
   }
 
-
   public String format_block(String line) {
     String temp = line;
     int freeSpaces = maxLineLength - line.length();
